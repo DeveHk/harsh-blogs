@@ -62,12 +62,13 @@ const Navbar = (props: Props) => {
         <ul
           className={`links hidden w-full items-center justify-around gap-8 md:col-span-9 md:flex  md:px-[5%] lg:col-span-8 lg:px-[10%] xl:px-[20%]  font-roboto  text-white`}
         >
+          <NavLink href="/">Home</NavLink>
           <NavLink href="/technology">Technology</NavLink>
           <NavLink href="/design">Design</NavLink>
           <NavLink href="/finance">Finance</NavLink>
-          <NavLink href="/contact">Contact</NavLink>
+          {/*<NavLink href="/contact">Contact</NavLink>
           <NavLink href="/about">About</NavLink>
-          {/*<NavLink href="/about">About Us</NavLink>*/}
+          <NavLink href="/about">About Us</NavLink>*/}
         </ul>
 
         {/* //Profile Button */}
@@ -84,11 +85,12 @@ const Navbar = (props: Props) => {
         <ul
           className={`flex flex-col justify-center shadow-2xl ${"font-koulen"} h-full w-[50vw]  space-y-10 rounded-br-[50%] rounded-tr-[50%] bg-prussian-blue-950 bg-opacity-20    pl-8 text-white backdrop-blur-[20px]`}
         >
+          <NavLink href="/">Home</NavLink>
           <NavLink href="/technology">Technology</NavLink>
           <NavLink href="/design">Design</NavLink>
           <NavLink href="/finance">Finance</NavLink>
-          <NavLink href="/contact">Contact</NavLink>
-          <NavLink href="/about">About</NavLink>
+          {/*<NavLink href="/contact">Contact</NavLink>
+          <NavLink href="/about">About</NavLink>*/}
         </ul>
       </div>
     </div>

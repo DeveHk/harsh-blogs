@@ -1,7 +1,7 @@
-import LandingGrid from "./GridPages/LandingGrid";
+import Grid from "./GridPages/Grid";
 import Slider from "./LandingSwiper/Slider";
 import Navbar from "./NavBar/Navbar";
-
+import { blogtile } from "./data";
 const BlogPage = () => {
   return (
     <div className="bg-[#030203]   min-h-[100vh] relative">
@@ -11,11 +11,11 @@ const BlogPage = () => {
       <div className="">
         <Navbar></Navbar>
       </div>
-      <div className="relative w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden mt-20">
         <Slider></Slider>
       </div>
       <div className="relative">
-        <LandingGrid></LandingGrid>
+        <Grid slides={blogtile}></Grid>
       </div>
     </div>
   );

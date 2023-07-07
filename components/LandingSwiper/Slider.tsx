@@ -7,28 +7,7 @@ import Slide from "./Slide";
  * DATAFETCH
  * need preview of blogs here
  */
-const slide = [
-  {
-    tag: "POPULAR",
-    title: "State of mobile apps",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, iste! Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, iste!",
-    img: "slide1",
-    tagimg: "",
-    by: "Harsh",
-    des: "Web developer",
-  },
-  {
-    tag: "POPULAR",
-    title: "State of mobile apps",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, iste! Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, iste!",
-    img: "slide1",
-    tagimg: "",
-    by: "Harsh",
-    des: "Web developer",
-  },
-];
+import { slide } from "../data";
 const Slider = () => {
   return (
     <div className="h-[400px]   mx-2 rounded-3xl mb-10 bg-black bg-opacity-80">
