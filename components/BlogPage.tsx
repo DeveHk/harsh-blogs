@@ -14,7 +14,7 @@ const BlogPage = () => {
       <div className="relative w-full overflow-hidden mt-20">
         <Slider></Slider>
       </div>
-      <div className="relative">
+      <div className="relative ">
         <Grid slides={blogtile}></Grid>
       </div>
     </div>
