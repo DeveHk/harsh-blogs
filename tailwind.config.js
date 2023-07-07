@@ -6,6 +6,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
+        koulen: ["Koulen", "sans-serif"],
+
+        montserrat: ["montserrat", "sans-serif"],
+      },
       colors: {
         saffron: {
           50: "#fffceb",
