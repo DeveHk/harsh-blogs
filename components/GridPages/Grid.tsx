@@ -1,11 +1,6 @@
-import { useEffect } from "react";
 import { GridTiles1, GridTiles2, GridTiles3 } from "./GridTiles";
 
 const Grid = ({ slides }: any) => {
-  useEffect(() => {
-    console.log(slides);
-  });
-
   return (
     <div className="w-full min-h-[300px]  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  ">
       {slides.map((sld: any, i: any) => {

@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import Blog from "./Blog/Blog";
+import Grid from "./GridPages/Grid";
+import Navbar from "./NavBar/Navbar";
+
 import { useRecoilState } from "recoil";
 import { dataSate } from "../state/blogState";
-import LandingGrid from "./GridPages/LandingGrid";
-import Header from "./Header/Header";
-import Slider from "./LandingSwiper/Slider";
-import Navbar from "./NavBar/Navbar";
-const LandingPage = () => {
+
+const IndividualBlog = ({ page }: any) => {
   const [data, setData] = useRecoilState(dataSate);
-  const [slide, setSlide] = useState(data.filter((dat) => dat.rating > 1000));
-  useEffect(() => {}, [slide]);
+  const blogtile = data.filter((dat) => {
+    for (let i = 0; i < dat.hash.length; i++) {
+      if (page.hash.includes(dat.hash[i]) == true) return true;
+    }
+    return false;
+  });
   return (
     <div className="bg-[#030203]   min-h-[100vh] relative">
       <div className="bg-[#2d5886] rounded-full fixed -top-10  right-10 h-[180px] w-[250px] md:h-[200px] md:w-[300px] lg:h-[250px] lg:w-[400px]"></div>
@@ -17,17 +21,15 @@ const LandingPage = () => {
       <div className="">
         <Navbar></Navbar>
       </div>
-      <div className="relative mt-[100px]">
-        <Header></Header>
-      </div>
-      <div className="relative w-full overflow-hidden">
-        <Slider slid={slide}></Slider>
+      <div className="h-full w-full relative mt-[100px]  bg-opacity-20">
+        {page && <Blog page={page}></Blog>}
       </div>
       <div className="relative">
-        <LandingGrid></LandingGrid>
+        <div className="mt-10 text-gray-300 text-2xl ml-10">Similar Blogs</div>
+        <Grid slides={blogtile}></Grid>
       </div>
     </div>
   );
 };
 
-export default LandingPage;
+export default IndividualBlog;

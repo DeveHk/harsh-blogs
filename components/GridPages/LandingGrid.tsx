@@ -6,8 +6,10 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { dataSate } from "../../state/blogState";
 import theme from "../UITheme";
-import { data } from "../data";
 import Grid from "./Grid";
 /*
 DATAFETCH
@@ -15,6 +17,13 @@ DATAFETCH
 */
 
 const LandingGrid = () => {
+  const [data, setData] = useRecoilState(dataSate);
+  const [trend, useTrend] = useState(data.filter((dat) => dat.type == "T"));
+  const [latest, useLatest] = useState(data.filter((dat) => dat.type == "N"));
+  const [feature, useFeature] = useState(data.filter((dat) => dat.type == "F"));
+  useEffect(() => {
+    console.log(trend);
+  }, [latest, feature, trend]);
   return (
     <div className="w-full  px-10">
       <ChakraProvider theme={theme}>
@@ -26,13 +35,13 @@ const LandingGrid = () => {
           </TabList>
           <TabPanels>
             <TabPanel className="h-full w-full">
-              <Grid slides={data[0]}></Grid>
+              <Grid slides={trend}></Grid>
             </TabPanel>
             <TabPanel className="h-full w-full">
-              <Grid slides={data[1]}></Grid>
+              <Grid slides={latest}></Grid>
             </TabPanel>
             <TabPanel className="h-full w-full">
-              <Grid slides={data[0]}></Grid>
+              <Grid slides={feature}></Grid>
             </TabPanel>
           </TabPanels>
         </Tabs>

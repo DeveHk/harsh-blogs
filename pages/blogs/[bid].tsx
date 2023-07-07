@@ -1,11 +1,15 @@
-import BlogPage from "../../components/BlogPage";
-
+import { useRouter } from "next/router";
 import { useEffect } from "react";
+
+import { useState } from "react";
+import IndividualBlog from "../../components/IndividualBlog";
 import { supabase } from "../../db/supabaseClient";
 import { useGlobalState } from "../../state/blogState";
-const Home = () => {
+const IndividualBlogpg = () => {
   const [data, setData] = useGlobalState();
-
+  const router = useRouter();
+  const { bid } = router.query;
+  const [page, setPage] = useState(data.filter((dat) => dat.id == bid)[0]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,7 +31,15 @@ const Home = () => {
     };
     if (data.length == 0) fetchData();
   }, [data, setData]);
-  return <BlogPage tags={"finance"}></BlogPage>;
+
+  useEffect(() => {
+    setPage(data.filter((dat) => dat.id == bid)[0]);
+  }, [bid, data]);
+  return (
+    <div className="">
+      {page && <IndividualBlog page={page}></IndividualBlog>}
+    </div>
+  );
 };
 
-export default Home;
+export default IndividualBlogpg;
