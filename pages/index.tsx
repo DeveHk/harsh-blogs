@@ -1,7 +1,5 @@
-import { Inter } from "@next/font/google";
-import LandingPage from "../components/LandingPage";
 
-const inter = Inter({ subsets: ["latin"] });
+import LandingPage from "../components/LandingPage";
 
 export default function Home() {
   return <LandingPage></LandingPage>;

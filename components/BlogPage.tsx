@@ -1,9 +1,8 @@
 import LandingGrid from "./GridPages/LandingGrid";
-import Header from "./Header/Header";
 import Slider from "./LandingSwiper/Slider";
 import Navbar from "./NavBar/Navbar";
 
-const LandingPage = () => {
+const BlogPage = () => {
   return (
     <div className="bg-[#030203]   min-h-[100vh] relative">
       <div className="bg-[#2d5886] rounded-full fixed -top-10  right-10 h-[180px] w-[250px] md:h-[200px] md:w-[300px] lg:h-[250px] lg:w-[400px]"></div>
@@ -11,9 +10,6 @@ const LandingPage = () => {
       <div className="fixed w-full h-full bg-[#030203] bg-opacity-5 backdrop-blur-[100px]"></div>
       <div className="">
         <Navbar></Navbar>
-      </div>
-      <div className="relative mt-[100px]">
-        <Header></Header>
       </div>
       <div className="relative w-full overflow-hidden">
         <Slider></Slider>
@@ -25,4 +21,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default BlogPage;
