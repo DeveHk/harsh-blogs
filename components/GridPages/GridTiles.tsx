@@ -19,7 +19,7 @@ interface Props {
   time: string;
   venue: string;
 }
-const GridTiles2 = ({ data }: any) => {
+const GridTiles2 = ({ data, maxlen }: any) => {
   const [focused, setFocused] = useState(false);
   return (
     <Link href={{ pathname: `/blogs/${data.id}` }}>
@@ -57,7 +57,7 @@ const GridTiles2 = ({ data }: any) => {
             </div>
             <div className="">
               <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                {data.content[0].slice(0, 180)}...
+                {data.content[0].slice(0, maxlen || 180)}...
               </p>
             </div>
             <div className="flex flex-wrap">
@@ -88,9 +88,9 @@ const GridTiles2 = ({ data }: any) => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M1 5h12m0 0L9 1m4 4L9 9"
                   />
                 </svg>
@@ -102,7 +102,7 @@ const GridTiles2 = ({ data }: any) => {
     </Link>
   );
 };
-const GridTiles1 = ({ data }: any) => {
+const GridTiles1 = ({ data, maxlen }: any) => {
   const [focused, setFocused] = useState(false);
   return (
     <Link href={{ pathname: `/blogs/${data.id}` }}>
@@ -140,7 +140,7 @@ const GridTiles1 = ({ data }: any) => {
             </div>
             <div className="">
               <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                {data.content[0]}...
+                {data.content[0].slice(0, maxlen || 180)}...
               </p>
             </div>
             <div className=" w-full flex items-center flex-row-reverse justify-between ">
@@ -170,7 +170,7 @@ const GridTiles1 = ({ data }: any) => {
     </Link>
   );
 };
-const GridTiles3 = ({ data }: any) => {
+const GridTiles3 = ({ data, maxlen }: any) => {
   const [focused, setFocused] = useState(false);
   return (
     <div className="relative">
@@ -215,7 +215,7 @@ const GridTiles3 = ({ data }: any) => {
             <div className="p-5">
               <div className="">
                 <p className=" font-normal text-gray-700 dark:text-gray-400">
-                  {data.content[0].slice(0, 180)}...
+                  {data.content[0].slice(0, maxlen || 180)}...
                 </p>
               </div>
               <div className="text-blue-500 mb-3 font-sans text-xs">
@@ -268,7 +268,7 @@ export { GridTiles1, GridTiles2, GridTiles3 };
             <path
               stroke="currentColor"
               stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinejoin="round"
               stroke-width="2"
               d="M1 5h12m0 0L9 1m4 4L9 9"
             />

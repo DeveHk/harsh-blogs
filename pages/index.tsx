@@ -1,11 +1,15 @@
 import LandingPage from "../components/LandingPage";
+import useBlogState from "../hooks/useBlogState";
 
-import { useEffect } from "react";
-import { supabase } from "../db/supabaseClient";
-import { useGlobalState } from "../state/blogState";
 export default function Home() {
-  const [data, setData] = useGlobalState();
+  const [data, setData] = useBlogState();
+  return data.length > 0 && <LandingPage></LandingPage>;
+}
 
+//import { useEffect } from "react";
+//import { supabase } from "../db/supabaseClient";
+//import { useGlobalState } from "../state/blogState";
+/*  const [data, setData] = useGlobalState();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,6 +31,4 @@ export default function Home() {
     };
     if (data.length == 0) fetchData();
   }, [data, setData]);
-
-  return data.length > 0 && <LandingPage></LandingPage>;
-}
+*/

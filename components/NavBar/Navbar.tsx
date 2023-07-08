@@ -72,6 +72,11 @@ const Navbar = (props: Props) => {
         </ul>
 
         {/* //Profile Button */}
+        <div className="text-white font-sans flex justify-center font-semibold">
+          <Link href="/login">
+            <div className="text-lg">Login</div>
+          </Link>
+        </div>
       </div>
 
       {/*Ham menu */}
