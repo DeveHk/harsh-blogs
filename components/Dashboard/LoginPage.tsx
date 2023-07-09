@@ -17,7 +17,7 @@ const LoginPage = () => {
         </div>
 
         <div className="col-span-2  flex justify-center">
-          <div className=" w-[480px]">
+          <div className=" min-w-[280px] w-[80%] max-w-[480px]">
             <LoginForm></LoginForm>
           </div>
         </div>

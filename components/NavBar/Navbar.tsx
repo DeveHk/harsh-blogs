@@ -15,6 +15,7 @@ const roboto = Roboto({ weight: "300" });
 const ACTIVELINKTYLE = "text-3xl";
 
 const Navbar = (props: Props) => {
+  const [user, setUser] = useState<any>("");
   const [nav, setNav] = useState<any>(false);
   const onScroll = useCallback((event: any) => {
     const { scrollY } = window;
@@ -22,13 +23,15 @@ const Navbar = (props: Props) => {
     else setNav(false);
   }, []);
   useEffect(() => {
+    if (user == "")
+      setUser(JSON.parse(localStorage.getItem("currentUserData") || "{}"));
     //add eventlistener to window
     window.addEventListener("scroll", onScroll, { passive: true });
     // remove event on unmount to prevent a memory leak with the cleanup
     return () => {
       window.removeEventListener("scroll", onScroll);
     };
-  });
+  }, [onScroll, user]);
 
   const [show, setShow] = useState(false);
 
@@ -72,10 +75,28 @@ const Navbar = (props: Props) => {
         </ul>
 
         {/* //Profile Button */}
-        <div className="text-white font-sans flex justify-center font-semibold">
-          <Link href="/login">
-            <div className="text-lg">Login</div>
-          </Link>
+        <div className="text-white h-full flex ">
+          {user.username ? (
+            <Link
+              href="/dashboard"
+              className="flex items-center  bg-white bg-opacity-25 w-fit  md:-translate-x-4 lg:translate-x-0 px-2 h-full font-sans  justify-center font-semibold rounded-2xl"
+            >
+              <div className="bg-gradient-to-t rounded-full md:h-4 md:w-4 h-7 w-7 from-red-500 to-red-300 text-center">
+                <span className="md:hidden">{user.username[0]}</span>
+              </div>
+              <div className="ml-1">
+                <div className="text-white text-sm  opacity-80 font-sans hidden sm:flex">
+                  {user.username}
+                </div>
+              </div>
+            </Link>
+          ) : (
+            <Link href="/login" className="flex items-center px-4 sm:px-5">
+              <div className=" text-white opacity-80 font-sans text-lg">
+                Login
+              </div>
+            </Link>
+          )}
         </div>
       </div>
 

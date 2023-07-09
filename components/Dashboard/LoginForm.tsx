@@ -1,9 +1,11 @@
 import { Spinner, useToast } from "@chakra-ui/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import google from "../../public/google.svg";
 
+import Axios from "axios";
 import { AiOutlineCheck, AiOutlineLock, AiOutlineUser } from "react-icons/ai";
 import { supabase } from "../../db/supabaseClient";
 import img from "../../public/login.svg";
@@ -12,9 +14,86 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
   const toast = useToast();
+  //const [user,setUser]=useUserState()
   {
     /**Signup functionality */
   }
+
+  {
+    /**Google sign in Handeler*/
+  }
+  const router = useRouter();
+  const [tokenClient, setTokenClient] = useState<any>({});
+  const googleSignHandler = () => {
+    tokenClient.requestAccessToken();
+  };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("currentUserData");
+    if (storedUser) {
+      router.push("/dashboard");
+    }
+
+    const google = (window as any).google; //getting global google variable. It is declared in HTML script
+    google.accounts.id.initialize({
+      client_id:
+        process.env.GOOGLE_CLIENT_ID ||
+        "787750941206-jvh44itqk0mgue54jpmuic06hhs7b0qm.apps.googleusercontent.com",
+    });
+    //to get the access token for jwt signup
+    setTokenClient(
+      google.accounts.oauth2.initTokenClient({
+        client_id:
+          process.env.GOOGLE_CLIENT_ID ||
+          "787750941206-jvh44itqk0mgue54jpmuic06hhs7b0qm.apps.googleusercontent.com",
+        scope: "https://www.googleapis.com/auth/userinfo.email",
+        callback: (tokenResponse: any) => {
+          if (tokenResponse && tokenResponse.access_token) {
+            const googleAccessToken = tokenResponse.access_token;
+            console.log(
+              "tokenResponse.access_token",
+              tokenResponse.access_token
+            );
+            setGproces(true);
+            Axios.post("/api/signup", {
+              googleAccessToken,
+            })
+              .then((result) => {
+                console.log(result);
+                localStorage.setItem(
+                  "currentUserData",
+                  JSON.stringify(result.data.user)
+                );
+                //setUser(result);
+                return Axios.get(
+                  `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${tokenResponse.access_token}`,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${tokenResponse.access_token}`,
+                      Accept: "application/json",
+                    },
+                  }
+                );
+              })
+              .then((res) => {
+                localStorage.setItem("currentUser", googleAccessToken);
+                //setToken(googleAccessToken);
+
+                router.push("/dashboard");
+                setGproces(false);
+              })
+              .catch((err) => {
+                setWpass(err);
+              });
+          }
+        },
+      })
+    );
+    google.accounts.id.prompt();
+  }, [router]);
+
+  //Client secreat: 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
+  ///////////////////////////////////////////////////////////////////////////////////////
 
   const handleSignup = async (event: any) => {
     event.preventDefault();
@@ -92,14 +171,18 @@ const LoginForm = () => {
   const [wpass, setWpass] = useState("");
 
   const [proces, setProces] = useState(false);
+
+  const [gproces, setGproces] = useState(false);
   const [inp, setInp] = useState(false);
   const [pass, setPass] = useState(false);
   const [cpass, setCpass] = useState(false);
+
   {
     /*signup functionality to be added latter*/
   }
   const [sign, setSign] = useState(false);
   const [focused, setFocused] = useState(false);
+
   return (
     <div
       onMouseOver={() => {
@@ -174,10 +257,10 @@ const LoginForm = () => {
               })}
             </Marquee>
           </div>
-          <div className=" w-full flex-col items-center px-8 justify-between mt-4 ">
+          <div className=" w-full flex-col items-center  justify-between mt-4 ">
             <div className="flex flex-col w-full ">
               {/**User name */}
-              <div className="w-full flex justify-center items-center flex-col">
+              <div className="w-full flex justify-center px-2 sm:px-6 items-center flex-col">
                 <div className="h-[30px] w-full relative overflow-hidden rounded-2xl">
                   <div className="bg-white absolute -bottom-4 left-5 w-5 h-5"></div>
                   <div
@@ -201,7 +284,7 @@ const LoginForm = () => {
                 </div>
               </div>
               {/**Password */}
-              <div className="w-full flex justify-center items-center flex-col mt-5">
+              <div className="w-full flex justify-center px-2 sm:px-6 items-center flex-col mt-5">
                 <div className="h-[30px] w-full relative overflow-hidden rounded-2xl">
                   <div className="bg-white absolute -bottom-4 left-5 w-5 h-5"></div>
                   <div
@@ -226,7 +309,7 @@ const LoginForm = () => {
               </div>
               {/**Confirm password */}
               {sign && (
-                <div className="w-full flex justify-center items-center flex-col mt-5">
+                <div className="w-full px-2 sm:px-6 flex justify-center items-center flex-col mt-5">
                   <div className="h-[30px] w-full relative overflow-hidden rounded-2xl">
                     <div className="bg-white absolute -bottom-4 left-5 w-5 h-5"></div>
                     <div
@@ -250,11 +333,19 @@ const LoginForm = () => {
                   </div>
                 </div>
               )}
-              {wpass && <div className="text-red-500">{wpass}</div>}
+              {wpass && (
+                <div className="px-2 sm:px-6 text-red-500">{wpass}</div>
+              )}
             </div>
 
-            <div className="mt-5 flex justify-between h-8 bg-blue">
-              <div className="flex w-[200px]  items-center px-2 py-1 h-8 justify-center  text-gray-950 hover:bg-gray-300  focus:ring-blue-300 focus:ring-4 font-sans rounded-lg bg-white">
+            <div
+              className="mt-5 flex justify-between h-8 bg-blue px-2 sm:px-6"
+              onClick={googleSignHandler}
+            >
+              <button
+                disabled={gproces}
+                className="flex max-w-[200px]  items-center px-2 py-1 h-8 justify-center  text-gray-950 hover:bg-gray-300 mr-2 focus:ring-blue-300 focus:ring-4 font-sans rounded-lg bg-white"
+              >
                 <Image
                   className="h-full w-10 "
                   width={100}
@@ -262,8 +353,13 @@ const LoginForm = () => {
                   src={google}
                   alt=""
                 />
-                <div className="flex-1 text-sm">Sign in With google</div>
-              </div>
+                {gproces ? <Spinner></Spinner> : ""}
+                <div className="flex-1 text-sm hidden sm:flex ">
+                  Sign in With google
+                </div>
+                <div className="flex-1 text-sm sm:hidden">google</div>
+              </button>
+
               <button
                 disabled={proces}
                 onClick={(e) => {
