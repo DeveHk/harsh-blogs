@@ -1,2 +1,4 @@
-import { default as GoogleUser, default as User } from "./googleUser";
-export { GoogleUser, User };
+import { default as Blog } from "./blog";
+import { default as GoogleUser } from "./googleUser";
+import { default as User } from "./user";
+export { Blog, GoogleUser, User };

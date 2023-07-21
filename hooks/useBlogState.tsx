@@ -1,5 +1,5 @@
+import Axios from "axios";
 import { useEffect } from "react";
-import { supabase } from "../db/supabaseClient";
 import { useGlobalState } from "../state/blogState";
 
 const useBlogState = () => {
@@ -9,12 +9,11 @@ const useBlogState = () => {
       try {
         const storedState = localStorage.getItem("globalState");
         if (!storedState) {
-          const { data, error } = await supabase.from("Blogs").select("*");
-          if (error) {
-            throw error;
-          }
-          setData(data);
-          localStorage.setItem("globalState", JSON.stringify(data));
+          Axios.get("/api/blog/get").then((res) => {
+            console.log(res.data.data);
+            setData(res.data.data);
+            localStorage.setItem("globalState", JSON.stringify(res.data.data));
+          });
         } else {
           setData(JSON.parse(storedState));
         }

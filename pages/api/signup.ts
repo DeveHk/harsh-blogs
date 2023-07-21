@@ -29,10 +29,9 @@ export default asyncHandler(async (req: any, res: any) => {
           res.status(200).json({
             login: true,
             message: "User Already Exists!",
-            user:alreadyExistingUser
+            user: alreadyExistingUser,
           });
-        } 
-        else {
+        } else {
           const userID = uuidv4();
           try {
             const newGoogleUser = await GoogleUser.create({
@@ -49,7 +48,7 @@ export default asyncHandler(async (req: any, res: any) => {
             );
 
             res.status(200).json({
-              user:newGoogleUser,
+              user: newGoogleUser,
               token,
             });
           } catch (e) {
@@ -79,7 +78,7 @@ export default asyncHandler(async (req: any, res: any) => {
       if (existingUser) {
         return res.status(400).json({
           message: "User already exists",
-          user:existingUser
+          user: existingUser,
         });
       }
       const userID = uuidv4();
@@ -94,7 +93,6 @@ export default asyncHandler(async (req: any, res: any) => {
       res.status(201).json({
         user: newUser,
       });
-      
     } catch (error) {
       //console.log(error);
       res.status(500).json({

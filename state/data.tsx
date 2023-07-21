@@ -6,6 +6,7 @@ interface data {
   title: string;
   content: Array<string>;
   img: string;
+  domain: string;
   by: string;
   des: string;
   hash: Array<string>;

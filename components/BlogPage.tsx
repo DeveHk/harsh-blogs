@@ -11,13 +11,14 @@ interface propType {
 const BlogPage = ({ tags }: propType) => {
   const [data, setData] = useRecoilState(dataSate);
   const [tag, setTag] = useRecoilState(tagState);
-
-  const blogtile = data.filter((dat) => {
-    for (let i = 0; i < dat.hash.length; i++) {
+  console.log(data);
+  const blogtile = data.filter(
+    (dat) => dat.domain == tags
+    /*for (let i = 0; i < dat.hash.length; i++) {
       if (tag[tags].includes(dat.hash[i]) == true) return true;
     }
-    return false;
-  });
+    return false;*/
+  );
   const slide = blogtile.filter((dat) => dat.rating > 1000);
 
   useEffect(() => {

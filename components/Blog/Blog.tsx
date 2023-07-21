@@ -9,7 +9,7 @@ const Blog = ({ page }: any) => {
             {page.title}
           </div>
           <div className="font-sans inline-block text-lg mt-5 bg-white bg-opacity-10 px-2 text-gray-400 rounded-lg italic">
-            {page.tag}
+            {page.domain}
           </div>
         </div>
       )}
@@ -26,7 +26,7 @@ const Blog = ({ page }: any) => {
               />
             </div>
           </div>
-          <div className="text-gray-300">{page.tagLine}</div>
+          <div className="text-gray-300 italic">&quot;{page.tagline}&quot;</div>
           <div className="">
             {page.content.map((para: any, i: any) => {
               return (

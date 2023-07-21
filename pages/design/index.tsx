@@ -3,7 +3,7 @@ import BlogPage from "../../components/BlogPage";
 import useBlogState from "../../hooks/useBlogState";
 const Home = () => {
   const [data, setData] = useBlogState();
-  return <BlogPage tags={"design"}></BlogPage>;
+  return <BlogPage tags={"Design"}></BlogPage>;
 };
 
 export default Home;

@@ -1,31 +1,30 @@
-import axios from 'axios';
-import connectDB from '../../db/db';
+import axios from "axios";
+import connectDB from "../../db/db";
 import asyncHandler from "../../hooks/asynchandler";
-import { GoogleUser } from '../../model';
+import { GoogleUser } from "../../model";
 //import { v4 as uuidv4 } from 'uuid/dist';
-import { } from 'crypto';
-import Jwt from 'jsonwebtoken';
+import {} from "crypto";
+import Jwt from "jsonwebtoken";
 
-export default   asyncHandler(async (req:any, res:any) => {
-
-  connectDB()
+export default asyncHandler(async (req: any, res: any) => {
+  connectDB();
 
   try {
-  const result = await GoogleUser.create({
-    email: "asdasdada",
-    username: "adsasdasd",
-    userID: "d4fc6aa4-9f62-4f0f-a76e-5f6b428d22a0",
+    const result = await GoogleUser.create({
+      email: "asdasdada",
+      username: "adsasdasd",
+      userID: "d4fc6aa4-9f62-4f0f-a76e-5f6b428d22a0",
+    });
+    console.log("result returned", result);
+  } catch (err) {
+    console.log("error returned", err);
+  }
+  res.status(200).json({
+    login: true,
+    message: "User Already Exists!",
   });
-  console.log("result returned",result);
-} catch (err) {
- console.log("error returned",err);
-}
-          res.status(200).json({
-            login: true,
-            message: "User Already Exists!",
-          });   
   if (req.body.googleAccessToken) {
-    console.log("reached here",req.body.googleAccessToken)
+    console.log("reached here", req.body.googleAccessToken);
     // google oauth
     axios
       .get("https://www.googleapis.com/oauth2/v3/userinfo", {
@@ -38,11 +37,11 @@ export default   asyncHandler(async (req:any, res:any) => {
         ////console.log("HKC::back response", response.data);
         const username = response.data.email.split("@")[0];
         const email = response.data.email;
-       const alreadyExistingUser = await GoogleUser.findOne({
+        const alreadyExistingUser = await GoogleUser.findOne({
           email: email,
         });
-       // console.log(alreadyExistingUser)
-       if (alreadyExistingUser) {
+        // console.log(alreadyExistingUser)
+        if (alreadyExistingUser) {
           ////console.log("existing user");
           res.status(200).json({
             login: true,
@@ -54,7 +53,7 @@ export default   asyncHandler(async (req:any, res:any) => {
             const newGoogleUser = await GoogleUser.create({
               email: email,
               username: username,
-              userID: "asdadadad"//userID,
+              userID: "asdadadad", //userID,
             });
             const token = Jwt.sign(
               {
@@ -117,4 +116,3 @@ export default   asyncHandler(async (req:any, res:any) => {
     }
   }*/
 });
-

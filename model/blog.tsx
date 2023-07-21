@@ -1,13 +1,17 @@
-import mongoose from "mongoose";
+import mongoose, { models } from "mongoose";
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
+const blogSchema = new Schema({
   id: {
     type: String,
     required: true,
     unique: true,
   },
   user_id: {
+    type: String,
+    required: true,
+  },
+  domain: {
     type: String,
     required: true,
   },
@@ -18,9 +22,8 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  tag: {
+  has: {
     type: String,
-    required: true,
   },
   title: {
     type: String,
@@ -30,6 +33,9 @@ const userSchema = new Schema({
   content: {
     type: [String],
     required: true,
+  },
+  conten: {
+    type: String,
   },
   img: {
     type: String,
@@ -56,10 +62,11 @@ const userSchema = new Schema({
     required: true,
   },
   rating: {
+    default: 100,
     type: String,
     required: true,
   },
 });
 
-const User = mongoose.model("User", userSchema);
-export default User;
+const Blog = models.Blog || mongoose.model("Blog", blogSchema);
+export default Blog;

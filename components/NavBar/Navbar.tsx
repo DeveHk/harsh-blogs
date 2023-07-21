@@ -4,8 +4,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import logo from "public/logoblog.svg";
 import { useCallback, useEffect, useState } from "react";
-import { AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineReload } from "react-icons/ai";
+import { useGlobalState } from "../../state/blogState";
 import NavLink from "./NavLink";
+
 type Props = {};
 const profile = {
   name: "John snow",
@@ -15,13 +17,21 @@ const roboto = Roboto({ weight: "300" });
 const ACTIVELINKTYLE = "text-3xl";
 
 const Navbar = (props: Props) => {
+  const [data, setData] = useGlobalState();
   const [user, setUser] = useState<any>("");
   const [nav, setNav] = useState<any>(false);
+  const [spin, setSpin] = useState<any>(false);
   const onScroll = useCallback((event: any) => {
     const { scrollY } = window;
     if (scrollY >= 20) setNav(true);
     else setNav(false);
   }, []);
+  const reload = () => {
+    setSpin(true);
+    localStorage.removeItem("globalState");
+    setData([]);
+    router.reload();
+  };
   useEffect(() => {
     if (user == "")
       setUser(JSON.parse(localStorage.getItem("currentUserData") || "{}"));
@@ -69,6 +79,14 @@ const Navbar = (props: Props) => {
           <NavLink href="/technology">Technology</NavLink>
           <NavLink href="/design">Design</NavLink>
           <NavLink href="/finance">Finance</NavLink>
+          <div
+            className="w-fit hover:bg-black p-1 rounded-full bg-transparent bg-opacity-50 transition-all duration-150 hover:animate-spin"
+            onClick={reload}
+          >
+            <AiOutlineReload
+              className={`h-5 w-5 ${spin && "animate-spin"}`}
+            ></AiOutlineReload>
+          </div>
           {/*<NavLink href="/contact">Contact</NavLink>
           <NavLink href="/about">About</NavLink>
           <NavLink href="/about">About Us</NavLink>*/}
@@ -115,6 +133,14 @@ const Navbar = (props: Props) => {
           <NavLink href="/technology">Technology</NavLink>
           <NavLink href="/design">Design</NavLink>
           <NavLink href="/finance">Finance</NavLink>
+          <div
+            className="w-fit hover:bg-black p-1 rounded-full bg-transparent bg-opacity-50 transition-all duration-150"
+            onClick={reload}
+          >
+            <AiOutlineReload
+              className={`h-8 w-8 ${spin ? "animate-spin" : ""}`}
+            ></AiOutlineReload>
+          </div>
           {/*<NavLink href="/contact">Contact</NavLink>
           <NavLink href="/about">About</NavLink>*/}
         </ul>
